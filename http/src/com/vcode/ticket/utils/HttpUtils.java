@@ -48,8 +48,8 @@ public class HttpUtils {
 	/**
 	 * 12306专用验证码(提交订单用)
 	 * @param in
-	 * @param x
-	 * @param y
+//	 * @param x
+//	 * @param y
 	 */
 	public static void getSubmitCodeBy12306(InputStream in,final HomeMethods order_oage) {
 		byte[] data = VHttpUtils.InputStreamToByte(in);

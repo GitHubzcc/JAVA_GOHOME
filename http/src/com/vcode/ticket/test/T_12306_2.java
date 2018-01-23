@@ -28,11 +28,11 @@ import com.vcode.ticket.utils.HttpUtils;
  */
 public class T_12306_2 {
 	
-	private static String username = "华浩";							//昵称，用来验证是否登录成功
+	private static String username = "张城才";							//昵称，用来验证是否登录成功
 	
-	private static String loginName = "hao707789";					//12306登录账号
+	private static String loginName = "15814525912";					//12306登录账号
 	
-	private static String password = "loveXIAO707789";				//12306登录密码
+	private static String password = "zhang19940303";				//12306登录密码
 	
 	private static Map<String, String[]> citiMap = HttpUtils.getCitiInfo();	//城市列表
 

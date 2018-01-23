@@ -1333,8 +1333,7 @@ public class HomePage {
 
 	/**
 	 * 添加一行数据
-	 * 
-	 * @param obj
+	 *
 	 */
 	public void addRow(String[] rows, JSONObject jsMap) {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
