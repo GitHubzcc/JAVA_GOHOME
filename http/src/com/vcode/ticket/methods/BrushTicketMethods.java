@@ -47,7 +47,10 @@ public class BrushTicketMethods extends Thread{
 	private void brushVotes() {
 		// 开始刷票
 		VHttpGet get = new VHttpGet(
-				"https://kyfw.12306.cn/otn/leftTicket/query?" + home_page.sb);
+				//原网址
+//				"https://kyfw.12306.cn/otn/leftTicket/query?" + home_page.sb);
+				//https://kyfw.12306.cn/otn/leftTicket/queryZ 官网网址
+				"https://kyfw.12306.cn/otn/leftTicket/queryZ?" + home_page.sb);
 		VHttpResponse res = VBrowser.execute(get);
 		String body = VHttpUtils.outHtml(res.getBody());
 		try {
@@ -61,6 +64,7 @@ public class BrushTicketMethods extends Thread{
 	 * 处理刷票返回信息
 	 */
 	private boolean disposeTicketInfo(String body,int[] seatOther) throws JSONException {
+		System.out.println("处理刷票返回信息开始------------------");
 		boolean Brush = true;
 		JSONObject json = new JSONObject(body);
 		JSONObject data = new JSONObject(json.get("data").toString());

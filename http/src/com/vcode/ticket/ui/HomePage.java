@@ -1303,7 +1303,7 @@ public class HomePage {
 	}
 
 	/**
-	 * 获取乘客列表
+	 * 获取乘客列表（地址可用）
 	 * 
 	 * @return
 	 */

@@ -26,11 +26,11 @@ import com.vcode.ticket.utils.ConfigUtils;
  *
  */
 public class LoginMethods {
-	
+
 	private LoginPage login_page;
-	
+
 	private String newCode = "";
-	
+
 	public LoginMethods(LoginPage login_page){
 		this.login_page = login_page;
 	}
@@ -40,10 +40,10 @@ public class LoginMethods {
 	 */
 	public static void ticket_init(){
 		VHttpGet get = new VHttpGet("https://kyfw.12306.cn/otn/login/init");
-		VHttpResponse res = VBrowser.execute(get);	
-		res.getEntity().disconnect();							
+		VHttpResponse res = VBrowser.execute(get);
+		res.getEntity().disconnect();
 	}
-	
+
 	/**
 	 * 获取登录界面验证码
 	 * @return
@@ -51,9 +51,9 @@ public class LoginMethods {
 	public static byte[] getLoginCode(){
 		VHttpGet get = new VHttpGet("https://kyfw.12306.cn/otn/passcodeNew/getPassCodeNew?module=login&rand=sjrand&"+Math.random());
 		VHttpResponse res = VBrowser.execute(get);								//获取验证码
-		return VHttpUtils.InputStreamToByte(res.getBody());		
+		return VHttpUtils.InputStreamToByte(res.getBody());
 	}
-	
+
 	/**
 	 * 表单校验
 	 * @return
@@ -77,12 +77,12 @@ public class LoginMethods {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * 验证验证码是否正确
 	 */
 	public void CheckCode(){
-		
+
 		if (!IsChoiceCode()) {
 			return;
 		}
@@ -99,7 +99,7 @@ public class LoginMethods {
 			}
 		}
 		login_page.lblNewLabel_2.setText("当前验证码是："+newCode);
-		
+
 		VHttpPost post = new VHttpPost("https://kyfw.12306.cn/otn/passcodeNew/checkRandCodeAnsyn");
 		VParames parames = new VParames();
 		parames.put("rand", "sjrand");
@@ -125,7 +125,7 @@ public class LoginMethods {
 			e1.printStackTrace();
 		}
 	}
-	
+
 	private void login(){
 		//开始提交登录信息
 		VHttpPost post = new VHttpPost("https://kyfw.12306.cn/otn/login/loginAysnSuggest");
@@ -133,7 +133,7 @@ public class LoginMethods {
 		parames.put("loginUserDTO.user_name", login_page.txtHao.getText());
 		parames.put("randCode", newCode);
 		parames.put("userDTO.password", new String(login_page.passwordField.getPassword()));
-		
+
 		post.setParames(parames);
 		VHttpResponse res = VBrowser.execute(post);
 		String body = VHttpUtils.outHtml(res.getBody());			//将网页内容转为文本
@@ -155,7 +155,7 @@ public class LoginMethods {
 			e.printStackTrace();
 		}
 		res.getEntity().disconnect();
-		
+
 		//开始第二次登录
 		post = new VHttpPost("https://kyfw.12306.cn/otn/login/userLogin");
 		VParames parames2 = new VParames();
@@ -165,7 +165,7 @@ public class LoginMethods {
 		if (res.getEntity().getStaus()==200){
 			if (VHttpUtils.outHtml(res.getBody()).contains("欢迎您登录中国铁路客户服务中心网站")){		//验证是否登录成功
 				login_page.lblNewLabel_2.setText("登录成功");
-				
+
 				//处理记住密码
 				boolean check = login_page.checkBox.isSelected();
 				String[] str = new String[]{login_page.txtHao.getText(),new String(login_page.passwordField.getPassword())};
@@ -182,7 +182,7 @@ public class LoginMethods {
 						e.printStackTrace();
 					}
 				}
-				
+
 				HomePage window = new HomePage();
 				window.printLog("登录成功,欢迎使用V代码抢票工具");
 				window.printLog("双击车次即可提交订单哦,右击可将车次加入自动刷票的预选车次中,更多隐藏功能等你发现！");
@@ -195,11 +195,11 @@ public class LoginMethods {
 			res.getEntity().disconnect();
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * 清空验证码
-	 * 
+	 *
 	 */
 	public void clearCode(){
 		newCode = "";
@@ -210,6 +210,6 @@ public class LoginMethods {
 				p3.remove(con);
 			}
 		}
-		login_page.frame.repaint(); 
+		login_page.frame.repaint();
 	}
 }
