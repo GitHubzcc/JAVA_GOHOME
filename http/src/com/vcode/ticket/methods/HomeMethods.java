@@ -71,6 +71,7 @@ public class HomeMethods extends Thread {
 		}
 		String station_train_code = "";
 		try {
+			//station_train_code is no found
 			station_train_code = obj2.get("station_train_code").toString();
 		} catch (JSONException e1) {
 			e1.printStackTrace();
@@ -83,7 +84,12 @@ public class HomeMethods extends Thread {
 			// 预订车票
 			home_page.printLog("订单线程已启动，开始提交订票信息");
 			VHttpPost post = new VHttpPost(
-					"https://kyfw.12306.cn/otn/leftTicket/submitOrderRequest");
+					//原网址：https://kyfw.12306.cn/otn/leftTicket/submitOrderRequest
+
+					//网址变动  https://kyfw.12306.cn/otn//payOrder/init  否
+					//         https://kyfw.12306.cn/otn/confirmPassenger/checkOrderInfo
+					//         https://kyfw.12306.cn/otn/confirmPassenger/getQueueCount
+					"https://kyfw.12306.cn/otn/confirmPassenger/checkOrderInfo");
 			VParames parames = new VParames();
 			parames.clear();
 			parames.put("secretStr", obj2.get("secretStr").toString());
@@ -204,7 +210,8 @@ public class HomeMethods extends Thread {
 		JSONObject userObj = home_page.userMap.get(username);
 		try {
 			VHttpPost post = new VHttpPost(
-					"https://kyfw.12306.cn/otn/confirmPassenger/checkOrderInfo");
+					//检查订单可用
+						"https://kyfw.12306.cn/otn/confirmPassenger/checkOrderInfo");
 			VParames parames = new VParames();
 			parames.clear();
 			parames.put("cancel_flag", "2");
@@ -243,6 +250,7 @@ public class HomeMethods extends Thread {
 			obj2 = home_page.datalist.get(home_page.table.getSelectedRow());
 		}
 		VHttpPost post = new VHttpPost(
+				//获取网址可用
 				"https://kyfw.12306.cn/otn/confirmPassenger/getQueueCount");
 		VParames parames4 = new VParames();
 		try {
