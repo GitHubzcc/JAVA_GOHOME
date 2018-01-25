@@ -74,13 +74,16 @@ public class HomeMethods extends Thread {
 		String station_train_code = "";
 		try {
 			//station_train_code is no found
-			System.out.println("-------obj2---------------"+obj2);
 			station_train_code = obj2.get("result").toString();
+			station_train_code="k";
 			System.out.println(station_train_code+"----------station_train_code----------");
 		} catch (JSONException e1) {
 			e1.printStackTrace();
 		}
+		System.out.println(seatTypes+"--------座位--------------");
+
 		passengerTicketStr = HttpUtils.getPassengerTicketStr(userObj, seatTypes, station_train_code);
+		System.out.println(passengerTicketStr+"---------------选择座位吧--------");
 		if (obj2==null) {
 			obj2 = home_page.datalist.get(home_page.table.getSelectedRow());
 		}

@@ -82,6 +82,7 @@ public class BrushTicketMethods extends Thread{
 				return false;
 			}
 		});
+		//清空数据列表，自动刷新时使用
 		home_page.datalist.clear();
 		JSONArray jsonArr = new JSONArray(result);
 		for (int i = 0; i < jsonArr.length(); i++) {

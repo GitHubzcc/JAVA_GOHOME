@@ -107,7 +107,9 @@ public class LoginMethods {
 		post.setParames(parames);							//装配提交的Form
 		VHttpResponse res = VBrowser.execute(post);
 		String body = VHttpUtils.outHtml(res.getBody());		//将网页内容转为文本
+		System.out.println(res.getBody()+"验证码--------------------");
 		try {
+			System.out.println(body+"------------------------------");
 			JSONObject json = new JSONObject(body);
 			JSONObject json2 = new JSONObject(json.get("data").toString());
 			if ("1".equals(json2.get("result"))) {
@@ -136,7 +138,8 @@ public class LoginMethods {
 
 		post.setParames(parames);
 		VHttpResponse res = VBrowser.execute(post);
-		String body = VHttpUtils.outHtml(res.getBody());			//将网页内容转为文本
+		String body = VHttpUtils.outHtml(res.getBody());   //将网页内容转为文本
+		System.out.println(body+"验证成功后body出现json解析出错-----------");
 		try {
 			JSONObject json = new JSONObject(body);
 			if ("true".equals(json.get("status").toString())) {
