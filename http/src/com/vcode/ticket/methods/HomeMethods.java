@@ -62,6 +62,8 @@ public class HomeMethods extends Thread {
 		String username = home_page.list_3.getModel().getElementAt(0).toString();
 		JSONObject userObj = home_page.userMap.get(username);
 		if (obj2==null) {
+			System.out.println(home_page.table.getSelectedRow()+"+++++++++++++++++++");
+			System.out.println(home_page.datalist.size()+"+++++++++++++++++++"+home_page.datalist);
 			obj2 = home_page.datalist.get(home_page.table.getSelectedRow());
 		}
 		DefaultListModel<Object> model = (DefaultListModel<Object>)home_page.list_2.getModel();
@@ -72,7 +74,9 @@ public class HomeMethods extends Thread {
 		String station_train_code = "";
 		try {
 			//station_train_code is no found
-			station_train_code = obj2.get("station_train_code").toString();
+			System.out.println("-------obj2---------------"+obj2);
+			station_train_code = obj2.get("result").toString();
+			System.out.println(station_train_code+"----------station_train_code----------");
 		} catch (JSONException e1) {
 			e1.printStackTrace();
 		}
@@ -84,12 +88,21 @@ public class HomeMethods extends Thread {
 			// 预订车票
 			home_page.printLog("订单线程已启动，开始提交订票信息");
 			VHttpPost post = new VHttpPost(
-					//原网址：https://kyfw.12306.cn/otn/leftTicket/submitOrderRequest
 
+					//发现：https://kyfw.12306.cn/otn/leftTicket/queryTicketPriceFL
+					//  https://kyfw.12306.cn/otn/leftTicket/queryTicketPrice
+					//  https://kyfw.12306.cn/otn/confirmPassenger/initDc
+
+					//https://kyfw.12306.cn/otn/login/checkUser
+					//https://kyfw.12306.cn/otn/leftTicket/submitOrderRequest
+
+
+					//原网址：https://kyfw.12306.cn/otn/leftTicket/submitOrderRequest
+					//       https://kyfw.12306.cn/otn/confirmPassenger/confirmSingleForQueue
 					//网址变动  https://kyfw.12306.cn/otn//payOrder/init  否
 					//         https://kyfw.12306.cn/otn/confirmPassenger/checkOrderInfo
 					//         https://kyfw.12306.cn/otn/confirmPassenger/getQueueCount
-					"https://kyfw.12306.cn/otn/confirmPassenger/checkOrderInfo");
+					"https://kyfw.12306.cn/otn/leftTicket/submitOrderRequest");
 			VParames parames = new VParames();
 			parames.clear();
 			parames.put("secretStr", obj2.get("secretStr").toString());

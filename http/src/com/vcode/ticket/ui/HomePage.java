@@ -205,6 +205,7 @@ public class HomePage {
 				model.setRowCount(0);
 				String[] time_arr = comboBox.getSelectedItem().toString().split("—");
 				for (int i = 0; i < datalist.size(); i++) {
+					System.out.println(datalist.get(i));
 					JSONObject obj = datalist.get(i);
 					String start_time;
 					try {
