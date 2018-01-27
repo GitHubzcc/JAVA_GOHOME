@@ -74,16 +74,15 @@ public class HomeMethods extends Thread {
 		String station_train_code = "";
 		try {
 			//station_train_code is no found
-			station_train_code = obj2.get("result").toString();
-			station_train_code="k";
-			System.out.println(station_train_code+"----------station_train_code----------");
+//			station_train_code = obj2.get("station_train_code").toString();
+			station_train_code = obj2.get("map").toString();
+			System.out.println(station_train_code+"------------result----boj2------");
+			station_train_code="Z";
 		} catch (JSONException e1) {
 			e1.printStackTrace();
 		}
-		System.out.println(seatTypes+"--------座位--------------");
-
 		passengerTicketStr = HttpUtils.getPassengerTicketStr(userObj, seatTypes, station_train_code);
-		System.out.println(passengerTicketStr+"---------------选择座位吧--------");
+		System.out.println(passengerTicketStr.toString()+"---------------选择座位吧--------");
 		if (obj2==null) {
 			obj2 = home_page.datalist.get(home_page.table.getSelectedRow());
 		}
@@ -96,10 +95,6 @@ public class HomeMethods extends Thread {
 					//  https://kyfw.12306.cn/otn/leftTicket/queryTicketPrice
 					//  https://kyfw.12306.cn/otn/confirmPassenger/initDc
 
-					//https://kyfw.12306.cn/otn/login/checkUser
-					//https://kyfw.12306.cn/otn/leftTicket/submitOrderRequest
-
-
 					//原网址：https://kyfw.12306.cn/otn/leftTicket/submitOrderRequest
 					//       https://kyfw.12306.cn/otn/confirmPassenger/confirmSingleForQueue
 					//网址变动  https://kyfw.12306.cn/otn//payOrder/init  否
@@ -108,20 +103,30 @@ public class HomeMethods extends Thread {
 					"https://kyfw.12306.cn/otn/leftTicket/submitOrderRequest");
 			VParames parames = new VParames();
 			parames.clear();
-			parames.put("secretStr", obj2.get("secretStr").toString());
+
+//			parames.put("secretStr", obj2.get("result").toString());
+			String secretStr = "fkDBcehj/CAZaTY4+wOy6sB2Nzq/Dk7kWTRb0qlDdq1bYQuEsU/nIMbs2B5DfKuosmwB+Hp9zqcq " +
+					"6Y63TzS3UrI36JHP/vMOcnfrg06KmhAJM2s/NiyVYLSzMf/mS+R74hC5kHNG3H9S/Vp+JOHJiuF/ " +
+					"E2Mp7SjkJ3/3Pf96Gxmc9UucvFucxNkGcZGCydK37SlKq3UAEcjtDB1jGG6ZG5ZRpMEmYJVVTL9Y " +
+					"XYnZpcZ5wR7bEBdhC4B7Q/7YZ+0erjjaoJ7m+oboHBEh";
+			parames.put("secretStr", secretStr);
+//			parames.put("secretStr", obj2.get("secretStr").toString());
 			parames.put("train_date", home_page.textField_2.getText());
 			parames.put("back_train_date", home_page.textField_2.getText());
 			parames.put("tour_flag", "dc");
 			parames.put("purpose_codes", "ADULT");
-			parames.put("query_from_station_name", obj2.get("from_station_name")
+			parames.put("query_from_station_name","广州");
+			parames.put("query_to_station_name","韶关东");
+			/*parames.put("query_from_station_name", obj2.get("from_station_name")
 					.toString());
 			parames.put("query_to_station_name", obj2.get("to_station_name")
-					.toString());
+					.toString());*/
 			parames.put("undefined", "");
 			post.setParames(parames);
 			VHttpResponse res = VBrowser.execute(post);
 			String body = VHttpUtils.outHtml(res.getBody());
 			JSONObject res_obj = new JSONObject(body);
+			System.out.println(body+"--------------body----------------");
 			if ("true".equals(res_obj.get("status").toString())) {
 				home_page.printLog("订票信息提交成功");
 				res.getEntity().disconnect();
